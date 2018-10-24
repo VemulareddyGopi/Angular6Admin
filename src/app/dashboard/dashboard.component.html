@@ -1,0 +1,40 @@
+<app-layout>
+  <div>
+   <input type="text" [(ngModel)]="filter" placeholder="Search">
+<div>
+  <table>
+    <thead>
+      <tr>
+        <th [class.active]="order === 'id'"
+            (click)="setOrder('id')">
+          ID <span [hidden]="reverse">▼</span>
+          <span [hidden]="!reverse">▲</span>
+        </th>
+        <th [class.active]="order === 'name'"
+            (click)="setOrder('name')">
+          Name <span [hidden]="reverse">▼</span>
+          <span [hidden]="!reverse">▲</span>
+        </th>
+        <th [class.active]="order === 'age'"
+            (click)="setOrder('age')">
+          Age <span [hidden]="reverse">▼</span>
+          <span [hidden]="!reverse">▲</span>
+        </th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr *ngFor="let row of users | filter:filter | 
+      orderBy: order:reverse:'case-insensitive'
+      | paginate: { itemsPerPage: pageCount, currentPage: p }">
+        <td>{{ row.id }}</td>
+        <td>{{ row.name }}</td>
+        <td>{{ row.age }}</td>
+      </tr>
+      </tbody>
+    </table>
+     <li *ngIf="(users | filter: filter).length === 0">No matching elements</li>
+  </div>
+   <pagination-controls  (pageChange)="p = $event"></pagination-controls>
+
+  </div>
+</app-layout>
