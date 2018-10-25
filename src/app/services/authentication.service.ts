@@ -2,26 +2,50 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { map } from 'rxjs/operators';
 import { environment } from '../../environments/environment';
+import { Token } from '../models';
 
 @Injectable({ providedIn: 'root' })
 export class AuthenticationService {
-    constructor(private http: HttpClient) { }
+    private isloggedIn = false;
+    private redirectUrl = '';
+    private loginUrl = 'login';
+    constructor(private http: HttpClient) {
+         if (localStorage.getItem('currentUser') && localStorage.getItem('currentUser') !== ''
+          && localStorage.getItem('currentUser') !== undefined) {
+            this.isloggedIn = true;
+        }
+     }
 
-    login(username: string, password: string) {
-        return this.http.post<any>(environment.apiUrl + 'api/users/authenticate', { username, password })
-            .pipe(map(user => {
-                // login successful if there's a jwt token in the response
-                if (user && user.token) {
-                    // store user details and jwt token in local storage to keep user logged in between page refreshes
-                    localStorage.setItem('currentUser', JSON.stringify(user));
-                }
+    login(Email: string, PassWord: string) {
+        return this.http.post<Token>(environment.apiUrl + 'api/Login', { Email, PassWord })
+        .pipe(data => {
+                data.subscribe(resp => {
+                    if (resp && resp.token) {
+                        this.isloggedIn = true ;
+                         localStorage.setItem('currentUser', JSON.stringify(resp));
+                    }
+                });
+                return data;
+            });
 
-                return user;
-            }));
     }
 
-    logout() {
+    public getRedirectUrl(): string {
+        return this.redirectUrl;
+    }
+    public setRedirectUrl(url: string): void {
+        this.redirectUrl = url;
+    }
+    public getLoginUrl(): string {
+        return this.loginUrl;
+    }
+     public isUserLoggedIn(): boolean {
+        return this.isloggedIn;
+    }
+
+   public logout() {
         // remove user from local storage to log user out
+        this.isloggedIn = false;
         localStorage.removeItem('currentUser');
     }
 }

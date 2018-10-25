@@ -1,5 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { OrderPipe } from 'ngx-order-pipe';
+import { UserService } from '../services';
+import { first } from 'rxjs/operators';
+import { User } from '../models';
 
 @Component({
   selector: 'app-dashboard',
@@ -8,19 +11,21 @@ import { OrderPipe } from 'ngx-order-pipe';
 })
 export class DashboardComponent implements OnInit {
 
-  users: any[] = [
-    { id: 1, name: 'John', age: 10 }, { id: 2, name: 'Jane', age: 15  }, { id: 3, name: 'Mario', age: 13  },
-    { id: 4, name: 'John' , age: 12 }, { id: 5, name: 'Jane' , age: 20 }, {id: 6, name: 'Mario', age: 11  }];
+private users: Array<User>;
   userFilter: '';
   pageCount = 5;
   p = 1;
-  order = 'name';
+  order = 'Name';
   reverse = false;
-  constructor(private orderPipe: OrderPipe) {
-   this.orderPipe.transform(this.users, 'name');
+  constructor(private orderPipe: OrderPipe, private userService: UserService ) {
+   this.orderPipe.transform(this.users, 'Name');
    }
 
   ngOnInit() {
+     this.userService.getAll().subscribe(resp => {
+     this.users = resp;
+     console.log(this.users);
+    });
   }
   setOrder(value: string) {
     if (this.order === value) {

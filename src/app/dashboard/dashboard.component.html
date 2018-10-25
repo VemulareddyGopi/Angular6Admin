@@ -5,19 +5,15 @@
   <table>
     <thead>
       <tr>
-        <th [class.active]="order === 'id'"
-            (click)="setOrder('id')">
-          ID <span [hidden]="reverse">▼</span>
-          <span [hidden]="!reverse">▲</span>
-        </th>
-        <th [class.active]="order === 'name'"
-            (click)="setOrder('name')">
+    
+        <th [class.active]="order === 'Name'"
+            (click)="setOrder('Name')">
           Name <span [hidden]="reverse">▼</span>
           <span [hidden]="!reverse">▲</span>
         </th>
-        <th [class.active]="order === 'age'"
-            (click)="setOrder('age')">
-          Age <span [hidden]="reverse">▼</span>
+        <th [class.active]="order === 'Email'"
+            (click)="setOrder('Email')">
+            Email <span [hidden]="reverse">▼</span>
           <span [hidden]="!reverse">▲</span>
         </th>
       </tr>
@@ -26,13 +22,12 @@
       <tr *ngFor="let row of users | filter:filter | 
       orderBy: order:reverse:'case-insensitive'
       | paginate: { itemsPerPage: pageCount, currentPage: p }">
-        <td>{{ row.id }}</td>
-        <td>{{ row.name }}</td>
-        <td>{{ row.age }}</td>
+        <td>{{ row.Name }}</td>
+        <td>{{ row.Email }}</td>
       </tr>
       </tbody>
     </table>
-     <li *ngIf="(users | filter: filter).length === 0">No matching elements</li>
+     <!-- <li *ngIf="(users | filter: filter).length === 0">No matching elements</li> -->
   </div>
    <pagination-controls  (pageChange)="p = $event"></pagination-controls>
 
