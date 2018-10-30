@@ -1,6 +1,6 @@
 <app-layout>
   <div>
-   <input type="text" [(ngModel)]="filter" placeholder="Search">
+   <input type="text" [(ngModel)]="searchtext" placeholder="Search">
 <div>
   <table>
     <thead>
@@ -19,7 +19,7 @@
       </tr>
       </thead>
       <tbody>
-      <tr *ngFor="let row of users | filter:filter | 
+      <tr *ngFor="let row of users | filter:searchtext | 
       orderBy: order:reverse:'case-insensitive'
       | paginate: { itemsPerPage: pageCount, currentPage: p }">
         <td>{{ row.Name }}</td>
@@ -27,7 +27,7 @@
       </tr>
       </tbody>
     </table>
-     <!-- <li *ngIf="(users | filter: filter).length === 0">No matching elements</li> -->
+     <li *ngIf="(users | filter: searchtext)?.length === 0">No matching elements</li>
   </div>
    <pagination-controls  (pageChange)="p = $event"></pagination-controls>
 

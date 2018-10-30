@@ -11,8 +11,8 @@ import { User } from '../models';
 })
 export class DashboardComponent implements OnInit {
 
-private users: Array<User>;
-  userFilter: '';
+  users: Array<User>;
+  searchtext: string;
   pageCount = 5;
   p = 1;
   order = 'Name';
@@ -24,7 +24,6 @@ private users: Array<User>;
   ngOnInit() {
      this.userService.getAll().subscribe(resp => {
      this.users = resp;
-     console.log(this.users);
     });
   }
   setOrder(value: string) {

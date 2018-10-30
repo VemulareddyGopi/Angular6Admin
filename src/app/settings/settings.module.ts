@@ -4,8 +4,8 @@ import { AccountsComponent } from './accounts/accounts.component';
 import { ProfileComponent } from './profile/profile.component';
 import { ChangepasswordComponent } from './changepassword/changepassword.component';
 
-import { SettingsRouter } from "src/app/settings/settings.router";
-import { SharedModule } from "src/app/shared/shared.module";
+import { SettingsRouter } from 'src/app/settings/settings.router';
+import { SharedModule } from 'src/app/shared/shared.module';
 
 @NgModule({
   imports: [
