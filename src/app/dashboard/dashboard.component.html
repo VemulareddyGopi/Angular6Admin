@@ -1,35 +1,89 @@
 <app-layout>
-  <div>
-   <input type="text" [(ngModel)]="searchtext" placeholder="Search">
-<div>
-  <table>
-    <thead>
-      <tr>
-    
-        <th [class.active]="order === 'Name'"
-            (click)="setOrder('Name')">
-          Name <span [hidden]="reverse">▼</span>
-          <span [hidden]="!reverse">▲</span>
-        </th>
-        <th [class.active]="order === 'Email'"
-            (click)="setOrder('Email')">
-            Email <span [hidden]="reverse">▼</span>
-          <span [hidden]="!reverse">▲</span>
-        </th>
-      </tr>
-      </thead>
-      <tbody>
-      <tr *ngFor="let row of users | filter:searchtext | 
-      orderBy: order:reverse:'case-insensitive'
-      | paginate: { itemsPerPage: pageCount, currentPage: p }">
-        <td>{{ row.Name }}</td>
-        <td>{{ row.Email }}</td>
-      </tr>
-      </tbody>
-    </table>
-     <li *ngIf="(users | filter: searchtext)?.length === 0">No matching elements</li>
-  </div>
-   <pagination-controls  (pageChange)="p = $event"></pagination-controls>
+  <div class="col-md-6" @enterLeave *ngIf="isShow">
+    <h2 class="text form">Add User</h2>
+    <form class="form" name="form" (ngSubmit)="f.form.valid && onSubmit()" #f="ngForm" novalidate>
+      <div class="form-group">
+        <label for="email">Email address:</label>
+        <input type="text" class="form-control" name="email" [(ngModel)]="model.email" #email="ngModel" [ngClass]="{ 'is-invalid': f.submitted && email.invalid }"
+          required email />
+        <div *ngIf="f.submitted && email.invalid" class="invalid-feedback">
+          <div *ngIf="email.errors.required">Email is required</div>
+          <div *ngIf="email.errors.email">Email must be a valid email address</div>
+        </div>
+      </div>
 
+      <div class="form-group">
+        <label for="firstName">Password:</label>
+        <input type="password" class="form-control" name="password" [(ngModel)]="model.password" #password="ngModel" [ngClass]="{ 'is-invalid': f.submitted && password.invalid }"
+          required minlength="6" />
+        <div *ngIf="f.submitted && password.invalid" class="invalid-feedback">
+          <div *ngIf="password.errors.required">Password is required</div>
+          <div *ngIf="password.errors.minlength">Password must be at least 6 characters</div>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="Name">Name:</label>
+        <input type="text" class="form-control" name="name" [(ngModel)]="model.name" #name="ngModel" [ngClass]="{ 'is-invalid': f.submitted && name.invalid }"
+          required />
+        <div *ngIf="f.submitted && name.invalid" class="invalid-feedback">
+          <div *ngIf="name.errors.required">Name is required</div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-3">
+          <button class="btn btn-success">Update</button>
+        </div>
+        <div class="col-md-3">
+          <button class="btn btn-primary" (click)="addCancel()">Cancel</button>
+        </div>
+      </div>
+    </form>
   </div>
+  <div class="col-md-12" *ngIf="!isShow">
+    <h2> User Details</h2>
+    <div class="row justify-content-end" style="margin-bottom: 10px">
+      <div class="col-md-3">
+        <input type="text" class="form-control" [(ngModel)]="searchtext" placeholder="Search">
+      </div>
+      <div class="col-md-3">
+        <button class="btn btn-primary" (click)="addUser()"> Add User</button>
+      </div>
+    </div>
+    <div class="table-responsive">
+      <table class="table table-bordered">
+        <thead class="thead-light">
+          <tr>
+            <th [class.active]="order === 'Name'" (click)="setOrder('Name')">
+              Name <span [hidden]="reverse">▼</span>
+              <span [hidden]="!reverse">▲</span>
+            </th>
+            <th [class.active]="order === 'Email'" (click)="setOrder('Email')">
+              Email <span [hidden]="reverse">▼</span>
+              <span [hidden]="!reverse">▲</span>
+            </th>
+
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let user of users| 
+          orderBy: order:reverse:'case-insensitive'|filter:searchtext |
+         paginate: { itemsPerPage: pageCount, currentPage: p }">
+            <td>{{ user.Name }}</td>
+            <td>{{ user.Email }}</td>
+
+            <td>
+              <button class="btn btn-primary" (click)="editUser(user)"> Edit</button>
+              <button class="btn btn-danger" style="margin-left: 20px;" (click)="deleteUser(user)"> Delete</button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <li *ngIf="(users | filter: searchtext)?.length === 0">No matching elements</li>
+    <div class="row justify-content-end">
+      <pagination-controls (pageChange)="p = $event"></pagination-controls>
+    </div>
+  </div>
+
 </app-layout>
