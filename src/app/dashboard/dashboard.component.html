@@ -2,9 +2,17 @@
   <div class="col-md-6" @enterLeave *ngIf="isShow">
     <h2 class="text form">Add User</h2>
     <form class="form" name="form" (ngSubmit)="f.form.valid && onSubmit()" #f="ngForm" novalidate>
+       <div class="form-group">
+        <label for="Name">Name:</label>
+        <input type="text" class="form-control" name="name" [(ngModel)]="model.Name" #name="ngModel" [ngClass]="{ 'is-invalid': f.submitted && name.invalid }"
+          required />
+        <div *ngIf="f.submitted && name.invalid" class="invalid-feedback">
+          <div *ngIf="name.errors.required">Name is required</div>
+        </div>
+      </div>
       <div class="form-group">
         <label for="email">Email address:</label>
-        <input type="text" class="form-control" name="email" [(ngModel)]="model.email" #email="ngModel" [ngClass]="{ 'is-invalid': f.submitted && email.invalid }"
+        <input type="text" class="form-control" name="email" [(ngModel)]="model.Email" #email="ngModel" [ngClass]="{ 'is-invalid': f.submitted && email.invalid }"
           required email />
         <div *ngIf="f.submitted && email.invalid" class="invalid-feedback">
           <div *ngIf="email.errors.required">Email is required</div>
@@ -14,20 +22,11 @@
 
       <div class="form-group">
         <label for="firstName">Password:</label>
-        <input type="password" class="form-control" name="password" [(ngModel)]="model.password" #password="ngModel" [ngClass]="{ 'is-invalid': f.submitted && password.invalid }"
+        <input type="password" class="form-control" name="password" [(ngModel)]="model.PassWord" #password="ngModel" [ngClass]="{ 'is-invalid': f.submitted && password.invalid }"
           required minlength="6" />
         <div *ngIf="f.submitted && password.invalid" class="invalid-feedback">
           <div *ngIf="password.errors.required">Password is required</div>
           <div *ngIf="password.errors.minlength">Password must be at least 6 characters</div>
-        </div>
-      </div>
-
-      <div class="form-group">
-        <label for="Name">Name:</label>
-        <input type="text" class="form-control" name="name" [(ngModel)]="model.name" #name="ngModel" [ngClass]="{ 'is-invalid': f.submitted && name.invalid }"
-          required />
-        <div *ngIf="f.submitted && name.invalid" class="invalid-feedback">
-          <div *ngIf="name.errors.required">Name is required</div>
         </div>
       </div>
       <div class="row">
@@ -68,7 +67,7 @@
         <tbody>
           <tr *ngFor="let user of users| 
           orderBy: order:reverse:'case-insensitive'|filter:searchtext |
-         paginate: { itemsPerPage: pageCount, currentPage: p }">
+         paginate: { itemsPerPage: pageCount, currentPage: page }">
             <td>{{ user.Name }}</td>
             <td>{{ user.Email }}</td>
 
@@ -82,7 +81,7 @@
     </div>
     <li *ngIf="(users | filter: searchtext)?.length === 0">No matching elements</li>
     <div class="row justify-content-end">
-      <pagination-controls (pageChange)="p = $event"></pagination-controls>
+      <pagination-controls (pageChange)="page = $event"></pagination-controls>
     </div>
   </div>
 

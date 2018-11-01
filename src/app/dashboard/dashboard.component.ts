@@ -4,6 +4,7 @@ import { UserService } from '../services';
 import { first } from 'rxjs/operators';
 import { User } from '../models';
 import { trigger, state, style, animate, transition, group } from '@angular/animations';
+import { ConfirmationDialogService } from '../shared/confirmation-dialog/confirmation-dialog.service';
 
 @Component({
   selector: 'app-dashboard',
@@ -50,13 +51,14 @@ export class DashboardComponent implements OnInit {
   users: User[];
   searchtext: string;
   pageCount = 5;
-  p = 1;
+  page = 1;
   order = 'Name';
-  reverse = false;
-   model: any = {};
-  constructor(private orderPipe: OrderPipe, private userService: UserService) {
+   reverse = false;
+   model: User;
+  constructor(private orderPipe: OrderPipe, private userService: UserService,
+  private confirmationDialogService: ConfirmationDialogService) {
     this.orderPipe.transform(this.users, 'Name');
-    
+    this.model = new User();
   }
 
   ngOnInit() {
@@ -74,17 +76,28 @@ export class DashboardComponent implements OnInit {
   }
    
   addUser(){
+    this.model=new User;
     this.isShow = !this.isShow
   }
   addCancel(){
     this.isShow = !this.isShow
+    this.model=new User;
   }
-  editUser(obj){
+  editUser(user){
     debugger;
     this.isShow = !this.isShow
+    this.model=user
+  }
+  deleteUser(user){
+this.confirmationDialogService.confirm('Please confirm..', 'Do you really want to ... ?')
+    .then((confirmed) => console.log('User confirmed:', confirmed))
+    .catch(() => console.log('User dismissed the dialog (e.g., by using ESC, clicking the cross icon, or clicking outside the dialog)'));
+  
   }
   onSubmit(){
-     //this.isShow = !this.isShow
+     this.isShow = !this.isShow
+     debugger
+     console.log(JSON.stringify(this.model));
   }
 
 }

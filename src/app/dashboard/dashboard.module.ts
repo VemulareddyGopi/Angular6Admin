@@ -3,7 +3,6 @@ import { CommonModule } from '@angular/common';
 import { DashboardComponent } from './dashboard.component';
 import { DashboardRouter } from '../dashboard/dashboard.router';
 import { SharedModule } from '../shared/shared.module';
-
 @NgModule({
   imports: [
     CommonModule,
