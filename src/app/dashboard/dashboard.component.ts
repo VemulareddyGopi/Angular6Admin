@@ -109,7 +109,7 @@ cities = [
     .then((confirmed) => {
        this.userService.delateUser(user.Id).subscribe(resp => {
           this.users = this.users.filter(item => item.Id !== user.Id);
-         this.message = resp.message;
+         this.message =  resp.message;
          this.isMessage = !this.isMessage;
          this.messageShow(1000);
         });

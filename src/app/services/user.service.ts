@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 
-import { User } from '../models';
+import { User, Message } from '../models';
 import { environment } from '../../environments/environment';
 
 @Injectable({ providedIn: 'root' })
@@ -13,6 +13,6 @@ export class UserService {
     }
 
      delateUser(Id) {
-        return this.http.delete<string>(environment.apiUrl + 'api/DeleteUser?Id=' + Id).pipe(data => data);
+        return this.http.delete<Message>(environment.apiUrl + 'api/DeleteUser?Id=' + Id).pipe(data => data);
     }
 }
