@@ -47,8 +47,10 @@ import { ConfirmationDialogService } from '../shared/confirmation-dialog/confirm
   ]
 })
 export class DashboardComponent implements OnInit {
-  isShow:boolean;
+  isShow: boolean;
+  isMessage: boolean;
   users: User[];
+  message: string;
   searchtext: string;
   pageCount = 5;
   page = 1;
@@ -60,9 +62,7 @@ export class DashboardComponent implements OnInit {
     this.orderPipe.transform(this.users, 'Name');
     this.model = new User();
   }
-
   ngOnInit() {
-   // this.isShow=true
     this.userService.getAll().subscribe(resp => {
       this.users = resp;
     });
@@ -74,30 +74,39 @@ export class DashboardComponent implements OnInit {
 
     this.order = value;
   }
-   
-  addUser(){
-    this.model=new User;
-    this.isShow = !this.isShow
+
+  addUser() {
+    this.model = new User;
+    this.isShow = !this.isShow;
   }
-  addCancel(){
-    this.isShow = !this.isShow
-    this.model=new User;
+  addCancel() {
+    this.isShow = !this.isShow;
+    this.model = new User;
   }
-  editUser(user){
-    debugger;
-    this.isShow = !this.isShow
-    this.model=user
+  editUser(user) {
+    this.isShow = !this.isShow;
+    this.model = user;
   }
-  deleteUser(user){
-this.confirmationDialogService.confirm('Please confirm..', 'Do you really want to ... ?')
-    .then((confirmed) => console.log('User confirmed:', confirmed))
-    .catch(() => console.log('User dismissed the dialog (e.g., by using ESC, clicking the cross icon, or clicking outside the dialog)'));
-  
+  deleteUser(user) {
+    this.confirmationDialogService.confirm('Please confirm..', 'Do you really want to delete ?')
+    .then((confirmed) => {
+       this.userService.delateUser(user.Id).subscribe(resp => {
+          this.users = this.users.filter(item => item.Id !== user.Id);
+         this.message = resp.message;
+         this.isMessage = !this.isMessage;
+         this.messageShow(1000);
+        });
+     });
   }
-  onSubmit(){
-     this.isShow = !this.isShow
-     debugger
+  onSubmit() {
+     this.isShow = !this.isShow;
      console.log(JSON.stringify(this.model));
   }
+
+  async messageShow(ms: number) {
+    await new Promise(resolve => setTimeout(() => resolve(), ms)).then(() => {
+     this.isMessage = !this.isMessage;
+    });
+}
 
 }

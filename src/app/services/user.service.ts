@@ -11,4 +11,8 @@ export class UserService {
     getAll() {
         return this.http.get<User[]>(environment.apiUrl + 'api/Login').pipe(data => data);
     }
+
+     delateUser(Id) {
+        return this.http.delete<string>(environment.apiUrl + 'api/DeleteUser?Id=' + Id).pipe(data => data);
+    }
 }

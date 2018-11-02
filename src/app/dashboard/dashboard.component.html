@@ -39,6 +39,7 @@
       </div>
     </form>
   </div>
+ 
   <div class="col-md-12" *ngIf="!isShow">
     <h2> User Details</h2>
     <div class="row justify-content-end" style="margin-bottom: 10px">
@@ -49,6 +50,9 @@
         <button class="btn btn-primary" (click)="addUser()"> Add User</button>
       </div>
     </div>
+    <div *ngIf="isMessage" class="alert alert-success">
+      <strong>Success : </strong> {{message}}
+  </div>
     <div class="table-responsive">
       <table class="table table-bordered">
         <thead class="thead-light">
