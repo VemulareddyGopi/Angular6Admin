@@ -57,6 +57,23 @@ export class DashboardComponent implements OnInit {
   order = 'Name';
    reverse = false;
    model: User;
+   selectedCity: any;
+    selectedCityIds: string[];
+cities = [
+        {id: 1, name: 'Vilnius'},
+        {id: 2, name: 'Kaunas'},
+        {id: 3, name: 'Pavilnys'},
+        {id: 4, name: 'Pabradė'},
+        {id: 5, name: 'Klaipėda'}
+    ];
+
+    cities2 = [
+        {id: 1, name: 'Vilnius'},
+        {id: 2, name: 'Kaunas'},
+        {id: 3, name: 'Pavilnys'},
+        {id: 4, name: 'Pabradė'},
+        {id: 5, name: 'Klaipėda'}
+    ];
   constructor(private orderPipe: OrderPipe, private userService: UserService,
   private confirmationDialogService: ConfirmationDialogService) {
     this.orderPipe.transform(this.users, 'Name');

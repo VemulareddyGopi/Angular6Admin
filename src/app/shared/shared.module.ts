@@ -7,7 +7,8 @@ import {NgxPaginationModule} from 'ngx-pagination';
 import { Ng2SearchPipeModule } from 'ng2-search-filter';
 import { OrderModule } from 'ngx-order-pipe';
 import {HttpModule} from '@angular/http';
-import { NgbModule } from "@ng-bootstrap/ng-bootstrap";
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { NgSelectModule } from '@ng-select/ng-select';
 import { ConfirmationDialogService } from '../shared/confirmation-dialog/confirmation-dialog.service';
 import { ConfirmationDialogComponent } from '../shared/confirmation-dialog/confirmation-dialog.component';
 @NgModule({
@@ -19,7 +20,8 @@ import { ConfirmationDialogComponent } from '../shared/confirmation-dialog/confi
     Ng2SearchPipeModule,
     OrderModule,
     HttpModule,
-    NgbModule.forRoot()
+    NgbModule.forRoot(),
+    NgSelectModule
   ],
   declarations: [LayoutComponent, HeaderComponent, FooterComponent,ConfirmationDialogComponent],
   providers: [ConfirmationDialogService],
@@ -34,6 +36,7 @@ import { ConfirmationDialogComponent } from '../shared/confirmation-dialog/confi
         Ng2SearchPipeModule,
         OrderModule,
         HttpModule,
-        ConfirmationDialogComponent]
+        ConfirmationDialogComponent,
+        NgSelectModule]
 })
 export class SharedModule { }

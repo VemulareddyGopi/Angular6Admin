@@ -1,9 +1,28 @@
- <app-layout>
+<!-- <app-layout>
   <div class="jumbotron">
     <h1>Accounts</h1>
     <p>
       In this tutorial you learn how to use Angular CLI v6 with Bootstrap and FontAwesome!
     </p>
   </div>
-</app-layout> 
+</app-layout>  -->
+<div class="col-md-6">
+  <h2 class="text form">Add User</h2>
+  <form class="form">
+    <div class="form-group">
+      <label for="Name">Name:</label>
+      <input type="text" name="name" [(ngModel)]="name" class="form-control" 
+         />
+    </div>
+    
 
+    <div class="row">
+      <div class="col-md-3">
+        <button class="btn btn-success">Update</button>
+      </div>
+      <div class="col-md-3">
+        <button class="btn btn-primary" (click)="addCancel()">Cancel</button>
+      </div>
+    </div>
+  </form>
+</div>

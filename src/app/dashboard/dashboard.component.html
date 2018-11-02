@@ -29,6 +29,23 @@
           <div *ngIf="password.errors.minlength">Password must be at least 6 characters</div>
         </div>
       </div>
+      <div class="form-group">
+        <label>State</label>
+        <ng-select [items]="cities" bindLabel="name" [ngModelOptions]="{standalone: true}" placeholder="Select city" [(ngModel)]="selectedCity">
+        </ng-select>
+        <p>
+          Selected city: {{selectedCity | json}}
+      </p>
+      </div>
+      
+      <div class="form-group">
+        <label>Citys</label>
+        <ng-select [items]="cities2" bindLabel="name" bindValue="id"  [ngModelOptions]="{standalone: true}" [multiple]="true" placeholder="Select cities" [(ngModel)]="selectedCityIds">
+        </ng-select>
+        <p>
+          Selected cities: {{selectedCityIds}}
+      </p>
+      </div>
       <div class="row">
         <div class="col-md-3">
           <button class="btn btn-success">Update</button>
