@@ -107,16 +107,23 @@ cities = [
   deleteUser(user) {
     this.confirmationDialogService.confirm('Please confirm..', 'Do you really want to delete ?')
     .then((confirmed) => {
+      if (confirmed) {
        this.userService.delateUser(user.Id).subscribe(resp => {
           this.users = this.users.filter(item => item.Id !== user.Id);
          this.message =  resp.message;
          this.isMessage = !this.isMessage;
          this.messageShow(1000);
         });
+      }
      });
   }
   onSubmit() {
      this.isShow = !this.isShow;
+     this.userService.AddUpdateUser(this.model).subscribe(resp => {
+         this.message =  resp.message;
+         this.isMessage = !this.isMessage;
+         this.messageShow(1000);
+        });
      console.log(JSON.stringify(this.model));
   }
 

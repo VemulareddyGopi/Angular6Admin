@@ -15,4 +15,7 @@ export class UserService {
      delateUser(Id) {
         return this.http.delete<Message>(environment.apiUrl + 'api/DeleteUser?Id=' + Id).pipe(data => data);
     }
+     AddUpdateUser(user) {
+        return this.http.post<Message>(environment.apiUrl + 'api/AddUser', user).pipe(data => data);
+    }
 }
